@@ -30,17 +30,24 @@ class TLTransQueue : public Queue {
 	void enqueue(Chain *chain) INLINE_ATTR volatile
 	{
 		chain->next = 0;
-		goto nqbegin;
+/*		goto nqbegin;
 		//lock or begin transaction;
 		XFAIL(lock1);
 		sched_yield();
 		nqbegin:
 		XBEGIN(lock1);
-
+*/
+		int nqstatus;
+		TRANSACTION(nqstatus,	
 			tail->next = chain;
 			tail = chain;
 		//unlock or end transaction;
-		XEND();
+//		XEND();
+		);
+
+	//	check status
+
+
 	}
 
 	Chain* dequeue() INLINE_ATTR volatile
@@ -56,13 +63,14 @@ class TLTransQueue : public Queue {
 		XBEGIN(lock2);
 			newhead	= head->next;
 			if (newhead == 0){
-				XEND();
-				return 0;
+				out = 0;
+				goto ende;
 			}
 			head->data = newhead->data;
 			out = head;
 			head = newhead;
 		//unlock or end transaction;
+		ende:
 		XEND();
 		return out;
 	}
