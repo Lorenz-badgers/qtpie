@@ -58,7 +58,7 @@ using namespace std;
 
 #define testqt(QType, TType, stream, opt, threads, ops) {	\
 	long time;	\
-	QType *queue = new QType();	\
+	QType *queue = new QType;	\
 	TType t(queue, opt, threads, ops);	\
 	time = t.starttest();	\
 	stream << "\t" << time << ",";	\
@@ -74,7 +74,7 @@ void compareall(long elements, int threads, long opsround, long opsmpsc){
 	testround(MutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
 	testround(TLMutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
 	testround(TLSpinQueue , elements, threads, ops, PRINT_ALL_ROUND);
-	testround(MSQueue , elements, threads, ops, PRINT_ALL_ROUND);
+//	testround(MSQueue , elements, threads, ops, PRINT_ALL_ROUND);
 #ifdef WOSCH
 	testround(WnbsQueue , elements, threads, ops, PRINT_ALL_ROUND);
 #endif
@@ -90,7 +90,7 @@ void compareall(long elements, int threads, long opsround, long opsmpsc){
 	testmpsc(MutexQueue, threads, ops, PRINT_ALL_MPSC);
 	testmpsc(TLMutexQueue, threads, ops, PRINT_ALL_MPSC);
 	testmpsc(TLSpinQueue , threads, ops, PRINT_ALL_MPSC);
-	testmpsc(MSQueue , threads, ops, PRINT_ALL_MPSC);
+//	testmpsc(MSQueue , threads, ops, PRINT_ALL_MPSC);
 	testmpsc(MPSCQueue, threads, ops, PRINT_ALL_MPSC);
 #ifdef WOSCH
 	testmpsc(WnbsQueue,  threads, ops, PRINT_ALL_MPSC);
@@ -118,9 +118,9 @@ void compareall(long elements, int threads, long opsround, long opsmpsc){
 
 int main(){
 	
-	testqtv(MSQueue, Test_mpmc, cout, threads, 1, 10, 1, 1, 1<<20);
+//	testqtv(WnbsQueue, Test_round_check, cout, threads, 2, 10, 2, 1, 10);
 //	testqt(MSQueue, Test_mpmc, cout, 1, 1, 1<<20);
-//	compareall(4,6,1<<20,1<<20);
+	compareall(10,20,1<<20,1<<20);
 //	morethreads(MSQueue, 20, 1<<25, 1<<20, 1);
 //	morethreads(TLSpinQueue, 20, 1<<25, 1<<20, 1);
 }
