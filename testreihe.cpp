@@ -172,7 +172,7 @@ int main(){
 	
 //	testqtv(WnbsQueue, Test_round_check, cout, threads, 2, 10, 2, 1, 10);
 //	testqt(MSQueue, Test_mpmc, cout, 1, 1, 1<<20);
-	compareall(8,8,1<<30,1<<20);
+	compareall(8,8,1<<20,1<<20);
 //	morethreads(MSQueue, 20, 1<<25, 1<<20, 1);
 //	morethreads(TLSpinQueue, 20, 1<<25, 1<<20, 1);
 }

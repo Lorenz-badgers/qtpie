@@ -7,6 +7,8 @@
 #include "trans.h"
 
 #include <iostream>
+#include <sched.h>
+
 
 class TLTransQueue : public Queue {
 	private:
@@ -28,9 +30,11 @@ class TLTransQueue : public Queue {
 	void enqueue(Chain *chain) INLINE_ATTR volatile
 	{
 		chain->next = 0;
-		
+		goto nqbegin;
 		//lock or begin transaction;
 		XFAIL(lock1);
+		sched_yield();
+		nqbegin:
 		XBEGIN(lock1);
 
 			tail->next = chain;
@@ -43,10 +47,12 @@ class TLTransQueue : public Queue {
 	{
 		Chain *out;
 		Chain *newhead;
-		
+		goto dqbegin;
 
 		//lock or begin transaction;
 		XFAIL(lock2);
+		sched_yield();
+		dqbegin:
 		XBEGIN(lock2);
 			newhead	= head->next;
 			if (newhead == 0){

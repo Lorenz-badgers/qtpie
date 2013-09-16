@@ -79,8 +79,10 @@ public:
 			}
 		}
 		for (int i=0; i< chainsize; i++){
-			if (checks[i] != 1)
+			if (checks[i] != 1){
 				++errors;
+				cout << "error: element " << i << " " <<checks[i] << " mal vorhanden" << endl; 
+			}
 		}	
 		return errors;
 	}

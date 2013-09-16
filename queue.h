@@ -3,12 +3,15 @@
 
 #include "Chain.h"
 
-
+using namespace std;
 class Queue{
 	public:
-	virtual void enqueue(Chain* chain) volatile{}
-	virtual Chain* dequeue() volatile{}
-
+	virtual void enqueue(Chain* chain) volatile{
+		cout << "volatile fehlt"<< endl;
+	}
+	virtual Chain* dequeue() volatile{
+		cout << "volatile fehlt"<< endl;
+	}
 };
 
 #endif
