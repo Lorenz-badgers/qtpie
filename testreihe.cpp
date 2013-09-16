@@ -41,7 +41,27 @@ using namespace std;
 	delete queue;	\
 }
 
+#define testroundcheck(Type, elements, threads, ops, output) { \
+	long time;	\
+	Type *queue = new Type();	\
+	Test_round_check t(queue, elements, threads, ops);	\
+	output(Type);	\
+	time = t.starttest();	\
+	cout << time << " errors" << endl;	\
+	t.cleanup();	\
+	delete queue;	\
+}
 
+#define testmpsccheck(Type, threads, ops, output) {	\
+	long time;	\
+	Type *queue = new Type();	\
+	Test_mpmc_check t(queue, threads, ops);	\
+	output(Type);	\
+	time = t.starttest();	\
+	cout << time << " errors" << endl;	\
+	t.cleanup();	\
+	delete queue;	\
+}
 
 #define testqtv(QType, TType, stream, variable, step, stop, vopt, vthreads, vops) {	\
 	stream << #QType << ",";	\
@@ -69,7 +89,7 @@ using namespace std;
 void compareall(long elements, int threads, long opsround, long opsmpsc){
 
 	long ops = opsround;
-
+/*
 	testround(SpinQueue, elements, threads, ops, PRINT_ALL_ROUND);
 	testround(MutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
 	testround(TLMutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
@@ -100,6 +120,38 @@ void compareall(long elements, int threads, long opsround, long opsmpsc){
 	testmpsc(TLTransQueue , threads, ops, PRINT_ALL_MPSC);
 #endif
 
+	ops = opsround;
+*/
+	testroundcheck(SpinQueue, elements, threads, ops, PRINT_ALL_ROUND);
+	testroundcheck(MutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
+	testroundcheck(TLMutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
+	testroundcheck(TLSpinQueue , elements, threads, ops, PRINT_ALL_ROUND);
+//	testroundcheck(MSQueue , elements, threads, ops, PRINT_ALL_ROUND);
+#ifdef WOSCH
+	testroundcheck(WnbsQueue , elements, threads, ops, PRINT_ALL_ROUND);
+#endif
+#ifdef HASWELL
+	testroundcheck(TransQueue , elements, threads, ops, PRINT_ALL_ROUND);
+	testroundcheck(TLTransQueue , elements, threads, ops, PRINT_ALL_ROUND);
+#endif
+
+
+	ops = opsmpsc;
+
+	testmpsccheck(SpinQueue, threads, ops, PRINT_ALL_MPSC);
+	testmpsccheck(MutexQueue, threads, ops, PRINT_ALL_MPSC);
+	testmpsccheck(TLMutexQueue, threads, ops, PRINT_ALL_MPSC);
+	testmpsccheck(TLSpinQueue , threads, ops, PRINT_ALL_MPSC);
+//	testmpsccheck(MSQueue , threads, ops, PRINT_ALL_MPSC);
+	testmpsccheck(MPSCQueue, threads, ops, PRINT_ALL_MPSC);
+#ifdef WOSCH
+	testmpsccheck(WnbsQueue,  threads, ops, PRINT_ALL_MPSC);
+#endif
+#ifdef HASWELL
+	testmpsccheck(TransQueue, threads, ops, PRINT_ALL_MPSC);
+	testmpsccheck(TLTransQueue , threads, ops, PRINT_ALL_MPSC);
+#endif
+
 
 }
 
@@ -120,7 +172,7 @@ int main(){
 	
 //	testqtv(WnbsQueue, Test_round_check, cout, threads, 2, 10, 2, 1, 10);
 //	testqt(MSQueue, Test_mpmc, cout, 1, 1, 1<<20);
-	compareall(10,20,1<<20,1<<20);
+	compareall(8,8,1<<30,1<<20);
 //	morethreads(MSQueue, 20, 1<<25, 1<<20, 1);
 //	morethreads(TLSpinQueue, 20, 1<<25, 1<<20, 1);
 }

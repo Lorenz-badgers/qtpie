@@ -29,12 +29,13 @@ public:
 	int threads;
 	long ops;
 	Chain* chains;
+	long chainsize;
 
 
 	Test_round_check(Queue *nq, Queue *dq, long nq_inhalt, long dq_inhalt, int threads, long ops) : nq(nq), dq(dq), threads(threads), ops(ops) {	//zwei Queues
 		//queues fuellen mit entprechender anzahl an elementen
-
-		chains = new Chain[nq_inhalt+dq_inhalt]();
+		chainsize = nq_inhalt+dq_inhalt;
+		chains = new Chain[chainsize]();
 		
 		for(long i=0; i<nq_inhalt; i++){
 			chains[i]= Chain();
@@ -67,17 +68,17 @@ public:
 	}
 
 	int check(){
-		int *checks = new int[ops];
+		int *checks = new int[chainsize];
 		int errors = 0;
-		for (int i=0; i< ops; i++){
+		for (int i=0; i< chainsize; i++){
 			checks[i] = 0;
 		}
-		for (int i=0; i< ops; i++){
-			if(!((uintptr_t) chains[i].data > ops)){
+		for (int i=0; i< chainsize; i++){
+			if(!((uintptr_t) chains[i].data > chainsize)){
 				checks[(uintptr_t) chains[i].data] += 1;
 			}
 		}
-		for (int i=0; i< ops; i++){
+		for (int i=0; i< chainsize; i++){
 			if (checks[i] != 1)
 				++errors;
 		}	
@@ -104,9 +105,6 @@ public:
 		thread* thrarray = new thread[threads]();
 		long i;
 
-		struct timespec begin;
-		struct timespec end;
-		clock_gettime(CLOCK_MONOTONIC, &begin);
 
 		for (i=0; i<rest; i++){
 			thrarray[i]= thread(go, opt+1, nq, dq);
@@ -120,19 +118,9 @@ public:
 			thrarray[i].join();
 //			i--; //endlosscheife
 		}
-
-
-
-		clock_gettime(CLOCK_MONOTONIC, &end);
-		time_t sec;
-		long nsec;
-		sec = end.tv_sec - begin.tv_sec;
-		nsec = end.tv_nsec - begin.tv_nsec;
-		nsec /= 1000000;
-		sec *= 1000;
-		
+	
 		delete[] thrarray;
-		return sec+nsec;
+		return check();
 
 	}
 /*
