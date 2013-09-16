@@ -19,12 +19,12 @@ class MPSCQueue : public Queue {
 public:
 	//MPSCQueue() : Chain(0), tail((Chain**volatile)&next) { }
 	MPSCQueue() : next(0), tail((Chain**volatile)&next) { }
-	void enqueue(Chain* item);
-	Chain* dequeue();
+	void enqueue(Chain* item) volatile;
+	Chain* dequeue() volatile;
 	Chain* peek() const { return (Chain*) next; }
 };
 
-inline void MPSCQueue::enqueue(Chain* item) {
+inline void MPSCQueue::enqueue(Chain* item) volatile{
 	Chain** volatile last;
 	item->next = 0;		/* make item last chain element */
 	do {
@@ -33,7 +33,7 @@ inline void MPSCQueue::enqueue(Chain* item) {
 	*last = item;		//CAS successful, so I can now link safely
 }
 
-inline Chain* MPSCQueue::dequeue() {
+inline Chain* MPSCQueue::dequeue() volatile{
 	Chain* volatile item;
 	if ((item = next) && !(next = item->next)) {
 		if (!WOSCH_CAS(&tail, &(item->next), &next)) {

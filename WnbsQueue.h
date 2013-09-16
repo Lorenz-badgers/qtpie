@@ -19,8 +19,8 @@ class WnbsQueue : public Queue {
 	static const uintptr_t ABA_MASK = 0x1;
 public:
 	WnbsQueue() { head.next = 0; tail = &head; }
-	void enqueue(Chain_p *item);
-	Chain_p* dequeue();
+	void enqueue(Chain_p *item) volatile;
+	Chain_p* dequeue() volatile;
 	static Chain *abaIndex (Chain_p* item) {
 		return (Chain *)((uintptr_t)item & ~ABA_MASK);
 	}
@@ -33,7 +33,7 @@ private:
 };
 
 
-void WnbsQueue::enqueue(Chain_p *item) {
+void WnbsQueue::enqueue(Chain_p *item) volatile{
 	volatile Chain* last;
 	volatile Chain* self;
 
@@ -50,7 +50,7 @@ void WnbsQueue::enqueue(Chain_p *item) {
 	}
 }
 
-Chain_p* WnbsQueue::dequeue() {
+Chain_p* WnbsQueue::dequeue() volatile{
 	Chain_p* node;
 	Chain_p* next;
 
