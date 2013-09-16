@@ -54,13 +54,17 @@ class TLTransQueue : public Queue {
 	{
 		Chain *out;
 		Chain *newhead;
-		goto dqbegin;
+	/*	goto dqbegin;
 
 		//lock or begin transaction;
 		XFAIL(lock2);
 		sched_yield();
 		dqbegin:
 		XBEGIN(lock2);
+	*/
+		int dqstatus;
+		TRANSACTION(dqstatus,	
+
 			newhead	= head->next;
 			if (newhead == 0){
 				out = 0;
@@ -71,7 +75,9 @@ class TLTransQueue : public Queue {
 			head = newhead;
 		//unlock or end transaction;
 		ende:
-		XEND();
+//		XEND();
+		);
+
 		return out;
 	}
 };
