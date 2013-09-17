@@ -20,7 +20,7 @@
 	code(TLTransQueue);	\
 }	
 #else
-#define HASWELLQUEUES
+#define HASWELLQUEUES(code)
 #endif				
 
 #ifdef USEAVG
