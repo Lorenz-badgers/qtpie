@@ -1,178 +1,166 @@
 
 #include <iostream>
+#include <fstream>
+#include <climits>
 
 #include "Chain.h"
 #include "tests.h"
 #include "queues.h"
 
 
-//#define WOSCH
+
 //#define HASWELL
+#define CORES 8
+//#define USEAVG
+	//use avareage result instead of minimum result
 
+#ifdef HASWELL
+#define HASWELLQUEUES		\
+	code(TransQueue);	\
+	code(TLTransQueue);	
+#else
+#define HASWELLQUEUES
+#endif				
 
-#define PRINT_ALL_ROUND(Type) \
-	cout << "test round mit "<< #Type <<" beginnt. \tThreads: " << threads << "\tOperationen: " << ops << "\tElemente zu Beginn: " << elements << endl
-#define PRINT_ALL_MPSC(Type) \
-	cout << "test mpsc mit\t"<< #Type <<" beginnt.\tProducers: " << threads << "\tOperationen: " << ops << endl
+#ifdef USEAVG
+#define avg(retavg, n, fun, args...) {	\
+	int i=n;			\
+	long retavg2;			\
+	retavg =0;			\
+	while(i-->0){			\
+		fun(retavg2, args);	\
+		retavg += retavg2;	\
+	}				\
+	retavg /=n;			\
+}
+#else
+#define avg(retavg, n, fun, args...) {	\
+	int i=n;			\
+	long retavg2;			\
+	retavg = LONG_MAX;		\
+	while(i-->0){			\
+		fun(retavg2, args);	\
+		if(retavg2 < retavg)	\
+		retavg = retavg2;	\
+	}				\
+}
+#endif
 
-#define PRINT_NOTHING(Type) 
+#define singletest(retsingle, QType, TType, args...) {	\
+	QType *queue = new QType;			\
+	TType t(queue, args);				\
+	retsingle = t.starttest();			\
+	t.cleanup();					\
+	delete queue;					\
+}
+
+#define iterqueues(code) {	\
+	code(SpinQueue);	\
+	code(TLSpinQueue);	\
+	code(MutexQueue);	\
+	code(TLMutexQueue);	\
+	code(MSQueue);		\
+	HASWELLQUEUES		\
+}
+
+#define iterqueuesMPSC(code) {	\
+	iterqueues(code)	\
+	code(MPSCQueue);	\
+}
+
+#define testandprintround(TQueue) {					\
+		long ret=0;					\
+		avg(ret, iterations, singletest, TQueue, Test_round, (threads*percent)/100, threads, ops);\
+		stream << ret << "\t";				\
+}
+
+#define testandprintmpsc(TQueue) {					\
+		long ret=0;					\
+		avg(ret, iterations, singletest, TQueue, Test_mpmc, threads, 1, ops);\
+		stream << ret << "\t";				\
+}
+
+#define testandprintmpmc(TQueue) {					\
+		long ret=0;					\
+		avg(ret, iterations, singletest, TQueue, Test_mpmc, threads, threads, ops);\
+		stream << ret << "\t";				\
+}
+
+#define printname(Object) stream << #Object << "\t" 
+
 
 using namespace std;
 
-#define testround(Type, elements, threads, ops, output) { \
-	long time;	\
-	Type *queue = new Type();	\
-	Test_round t(queue, elements, threads, ops);	\
-	output(Type);	\
-	time = t.starttest();	\
-	cout << time << "ms" << endl;	\
-	t.cleanup();	\
-	delete queue;	\
+
+void roundall(long percent, long ops, int iterations, ofstream &stream){
+	stream << "#Testround,\tInhalt = Threads * " << percent << "%\t Operationen: " << ops << endl;
+	stream << "#t\t";
+	iterqueues(printname);
+	stream << endl;
+	for (int threads = 1; threads < 2*CORES; threads++){	
+		stream << threads << "\t";			
+		iterqueues(testandprintround);
+		stream << endl;				
+	}
 }
 
-#define testmpsc(Type, threads, ops, output) {	\
-	long time;	\
-	Type *queue = new Type();	\
-	Test_mpmc t(queue, threads, ops);	\
-	output(Type);	\
-	time = t.starttest();	\
-	cout << time << "ms" << endl;	\
-	t.cleanup();	\
-	delete queue;	\
+void mpscall(long ops, int iterations, ofstream &stream){
+	stream << "#Testmpsc,\t Operationen: " << ops << endl;
+	stream << "#t\t";
+	iterqueuesMPSC(printname);
+	stream << endl;
+	for (int threads = 1; threads < 2*CORES; threads++){	
+		stream << threads << "\t";			
+		iterqueuesMPSC(testandprintmpsc);
+		stream << endl;				
+	}
 }
 
-#define testroundcheck(Type, elements, threads, ops, output) { \
-	long time;	\
-	Type *queue = new Type();	\
-	Test_round_check t(queue, elements, threads, ops);	\
-	output(Type);	\
-	time = t.starttest();	\
-	cout << time << " errors" << endl;	\
-	t.cleanup();	\
-	delete queue;	\
+void mpmcall(long ops, int iterations, ofstream &stream){
+	stream << "#Testmpmc,\t Operationen: " << ops << endl;
+	stream << "#t\t";
+	iterqueues(printname);
+	stream << endl;
+	for (int threads = 1; threads < 2*CORES; threads++){	
+		stream << threads << "\t";			
+		iterqueues(testandprintmpmc);
+		stream << endl;				
+	}
 }
-
-#define testmpsccheck(Type, threads, ops, output) {	\
-	long time;	\
-	Type *queue = new Type();	\
-	Test_mpmc_check t(queue, threads, ops);	\
-	output(Type);	\
-	time = t.starttest();	\
-	cout << time << " errors" << endl;	\
-	t.cleanup();	\
-	delete queue;	\
-}
-
-#define testqtv(QType, TType, stream, variable, step, stop, vopt, vthreads, vops) {	\
-	stream << #QType << ",";	\
-	{	\
-		long opt = vopt;	\
-		long threads = vthreads;	\
-		long ops = vops;	\
-		for(; variable <= stop; variable += step){	\
-			testqt(QType, TType, stream, opt, threads, ops);	\
-		}	\
-		stream << endl;	\
-	}	\
-}
-
-#define testqt(QType, TType, stream, opt, threads, ops) {	\
-	long time;	\
-	QType *queue = new QType;	\
-	TType t(queue, opt, threads, ops);	\
-	time = t.starttest();	\
-	stream << "\t" << time << ",";	\
-	t.cleanup();	\
-	delete queue;	\
-}
-
-void compareall(long elements, int threads, long opsround, long opsmpsc){
-
-	long ops = opsround;
-/*
-	testround(SpinQueue, elements, threads, ops, PRINT_ALL_ROUND);
-	testround(MutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
-	testround(TLMutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
-	testround(TLSpinQueue , elements, threads, ops, PRINT_ALL_ROUND);
-//	testround(MSQueue , elements, threads, ops, PRINT_ALL_ROUND);
-#ifdef WOSCH
-	testround(WnbsQueue , elements, threads, ops, PRINT_ALL_ROUND);
-#endif
-#ifdef HASWELL
-	testround(TransQueue , elements, threads, ops, PRINT_ALL_ROUND);
-	testround(TLTransQueue , elements, threads, ops, PRINT_ALL_ROUND);
-#endif
-
-
-	ops = opsmpsc;
-
-	testmpsc(SpinQueue, threads, ops, PRINT_ALL_MPSC);
-	testmpsc(MutexQueue, threads, ops, PRINT_ALL_MPSC);
-	testmpsc(TLMutexQueue, threads, ops, PRINT_ALL_MPSC);
-	testmpsc(TLSpinQueue , threads, ops, PRINT_ALL_MPSC);
-//	testmpsc(MSQueue , threads, ops, PRINT_ALL_MPSC);
-	testmpsc(MPSCQueue, threads, ops, PRINT_ALL_MPSC);
-#ifdef WOSCH
-	testmpsc(WnbsQueue,  threads, ops, PRINT_ALL_MPSC);
-#endif
-#ifdef HASWELL
-	testmpsc(TransQueue, threads, ops, PRINT_ALL_MPSC);
-	testmpsc(TLTransQueue , threads, ops, PRINT_ALL_MPSC);
-#endif
-
-	ops = opsround;
-*/
-	testroundcheck(SpinQueue, elements, threads, ops, PRINT_ALL_ROUND);
-	testroundcheck(MutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
-	testroundcheck(TLMutexQueue, elements, threads, ops, PRINT_ALL_ROUND);
-	testroundcheck(TLSpinQueue , elements, threads, ops, PRINT_ALL_ROUND);
-//	testroundcheck(MSQueue , elements, threads, ops, PRINT_ALL_ROUND);
-#ifdef WOSCH
-	testroundcheck(WnbsQueue , elements, threads, ops, PRINT_ALL_ROUND);
-#endif
-#ifdef HASWELL
-	testroundcheck(TransQueue , elements, threads, ops, PRINT_ALL_ROUND);
-	testroundcheck(TLTransQueue , elements, threads, ops, PRINT_ALL_ROUND);
-#endif
-
-
-	ops = opsmpsc;
-
-	testmpsccheck(SpinQueue, threads, ops, PRINT_ALL_MPSC);
-	testmpsccheck(MutexQueue, threads, ops, PRINT_ALL_MPSC);
-	testmpsccheck(TLMutexQueue, threads, ops, PRINT_ALL_MPSC);
-	testmpsccheck(TLSpinQueue , threads, ops, PRINT_ALL_MPSC);
-//	testmpsccheck(MSQueue , threads, ops, PRINT_ALL_MPSC);
-	testmpsccheck(MPSCQueue, threads, ops, PRINT_ALL_MPSC);
-#ifdef WOSCH
-	testmpsccheck(WnbsQueue,  threads, ops, PRINT_ALL_MPSC);
-#endif
-#ifdef HASWELL
-	testmpsccheck(TransQueue, threads, ops, PRINT_ALL_MPSC);
-	testmpsccheck(TLTransQueue , threads, ops, PRINT_ALL_MPSC);
-#endif
-
-
-}
-
-
-#define morethreads(Type, end, opsround, opsmpsc, quotient) {	\
-	cout << "test round mit " << #Type << " beginnt. \tOperationen: " << opsround << "\tElemente: #Threads/" << quotient << ".\tSteigende Threadzahl von 1 bis " << end << endl;	\
-	for(int threads = 1; threads<=end; threads++){	\
-		testround(Type, threads/quotient, threads, opsround, PRINT_NOTHING);	\
-	}	\
-	cout << "test mpsc mit " << #Type << " beginnt. \tOperationen: " << opsmpsc <<  ".\tSteigende Threadzahl von 1 bis " << end << endl;	\
-	for(int threads = 1; threads<=end; threads++){	\
-		testmpsc(Type, threads, opsmpsc, PRINT_NOTHING);	\
-	}	\
-}
-
 
 int main(){
+	/*usecase 1:
+	avg(retval, n, fun, args...) 
+	n = iterations
+	fun = singletest(retval, QType, TType, args...) 	
+	TType(args) = Test_round(inhalt, threads, ops)
+	TType(args) = Test_mpmc(producers, consumers, ops)
+	*/
+
+/* example:
+	long ret=0;
+	avg(ret, ITERATIONS, singletest, SpinQueue, Test_round, 20, 8, 1<<20);
+	cout << ret << "\t";
+	cout endl;
+*/
+
+	/*usecase 2:
+	roundall(percent, ops, iterations, ostream);	
+	mpscall(ops, iterations, ostream);	
+	mpmcall(ops, iterations, ostream);	
+	*/
 	
-//	testqtv(WnbsQueue, Test_round_check, cout, threads, 2, 10, 2, 1, 10);
-//	testqt(MSQueue, Test_mpmc, cout, 1, 1, 1<<20);
-	compareall(8,8,1<<30,1<<20);
-//	morethreads(MSQueue, 20, 1<<25, 1<<20, 1);
-//	morethreads(TLSpinQueue, 20, 1<<25, 1<<20, 1);
+	ofstream roundstream;
+	ofstream mpscstream;
+	ofstream mpmcstream;
+
+	roundstream.open("./data/roundall");
+	roundall(100, 1<<10, 10, roundstream);
+	roundstream.close();
+	mpscstream.open("./data/mpscstream");
+	mpscall(1<<10, 10, mpscstream);
+	mpscstream.close();
+	mpmcstream.open("./data/mpmcstream");
+	mpmcall(1<<10, 10, mpmcstream);
+	mpmcstream.close();
 }
