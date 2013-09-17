@@ -39,7 +39,7 @@ class CPointer
 		return ptr;
 	}
 
-	void setPtr(T *other) INLINE_ATTR
+	void setPtr(T *other) INLINE_ATTR volatile
 	{
 		ptr = other;
 	}

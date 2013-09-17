@@ -47,7 +47,7 @@ class MSQueue : public Queue
 					CPointer<Chain> tnext(chain, ctail.getCounter() + 1);
 					CPointer<Chain>::CAS(&(tail), ctail, tnext);
 					//
-					break;//successfully enqueued, done
+				break;//successfully enqueued, done
 				}
 
 				continue;

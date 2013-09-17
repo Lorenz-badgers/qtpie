@@ -5,7 +5,7 @@
 
 class Chain {
 public:
-	Chain() {} 
+	Chain() : next(0) {} 
 	Chain(Chain* next) : next(next) { }
 	union
 	{

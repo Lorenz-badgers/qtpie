@@ -6,9 +6,9 @@
 
 #define likely(a) a
 #define unlikely(a) a
-
-typedef long MSQ_DCAS_TYPE;
-typedef unsigned int uint_sys;
+#include <stdint.h>
+typedef __int128_t MSQ_DCAS_TYPE;
+typedef uint64_t uint_sys;
 
 #endif
 
