@@ -15,14 +15,14 @@ class TLTransQueue : public Queue {
    	Chain *tail;
 	uint8_t paddingt[CACHE_ALIGN - sizeof(Chain*)];
 
-	Chain c;
+	Chain *c;
 
 
 	public:
 	TLTransQueue() INLINE_ATTR {
 		c = new Chain(0);
-		head = &c;
-		tail = &c;
+		head = c;
+		tail = c;
 	}
 
 	void enqueue(Chain *chain) INLINE_ATTR volatile
