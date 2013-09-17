@@ -11,32 +11,13 @@
 class MSQueue : public Queue
 {
 	public:
-	CPointer<Chain> head;
-	CPointer<Chain> tail;
+	volatile CPointer<Chain> head;
+	volatile CPointer<Chain> tail;
 	Chain dummy;
 
-	MSQueue() INLINE_ATTR {head.setPtr(&dummy); tail.setPtr(&dummy);}
-
-	bool isEmpty() volatile INLINE_ATTR
-	{
-		for(;;)
-		{
-			//get local copies
-			CPointer<Chain> chead = head;
-			CPointer<Chain> ctail = tail;
-			CPointer<Chain> next = chead.getPtr()->cnext;
-
-			//this is important, check if copies are consistent
-			if(unlikely(chead != head))
-				continue;
-
-			if(chead.getPtr() == ctail.getPtr())//only one element in the queue
-			{
-				return next.getPtr() == 0;
-			}
-
-			return false;
-		}
+	MSQueue() INLINE_ATTR {
+		head.setPtr(&dummy);
+		tail.setPtr(&dummy);
 	}
 
 	void enqueue(Chain *chain) volatile INLINE_ATTR
@@ -48,7 +29,10 @@ class MSQueue : public Queue
 		{
 			//get local copies
 			CPointer<Chain> ctail = tail;
-			CPointer<Chain> next = ctail.getPtr()->cnext;
+			Chain* ptr = ctail.getPtr();
+		//	if (ptr == 0 )
+		//		cout << "fehler in nq" <<endl;
+			CPointer<Chain> next = ptr->cnext;
 
 			//this is important, check if copies are consistent
 			if(unlikely(ctail != tail))
@@ -83,7 +67,11 @@ class MSQueue : public Queue
 			//get local copies
 			CPointer<Chain> chead = head;
 			CPointer<Chain> ctail = tail;
-			CPointer<Chain> next = chead.getPtr()->cnext;
+
+			Chain* ptr = chead.getPtr();
+		//	if (ptr == 0 )
+		//		cout << "fehler in dq" <<endl;
+			CPointer<Chain> next = ptr->cnext;
 
 			//this is important, check if copies are consistent
 			if(unlikely(chead != head))
@@ -99,7 +87,8 @@ class MSQueue : public Queue
 				CPointer<Chain>::CAS(&(tail), ctail, tnext);
 				continue;
 			}
-
+			
+			void *out = next.getPtr()->data;
 			//else there are elements in the queue try to advance head pointer
 			CPointer<Chain> hnext(next.getPtr(), chead.getCounter() + 1);
 			if(likely(CPointer<Chain>::CAS(&(head), chead, hnext)))
@@ -109,18 +98,9 @@ class MSQueue : public Queue
 				//is volatile too and they get compared later
 				Chain * volatile outchain = chead.getPtr();
 
+				outchain->data=out;
+				return outchain;
 				//incrementing the counter may not be important... do it anyways
-				outchain->cnext.setCounter(outchain->cnext.getCounter() + 1);
-				outchain->cnext.setPtr(0);
-
-				//if it is not the dummy node return element
-				if(outchain != &(dummy))
-				{
-					return outchain;
-				}
-
-				//else enqueue dummy node and try again
-				enqueue(outchain);
 			}
 		}
 	}
