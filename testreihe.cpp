@@ -11,8 +11,6 @@
 
 //#define HASWELL
 #define CORES 8
-//#define USEAVG
-	//use avareage result instead of minimum result
 
 #ifdef HASWELL
 #define HASWELLQUEUES(code) {	\
@@ -23,29 +21,20 @@
 #define HASWELLQUEUES(code)
 #endif				
 
-#ifdef USEAVG
-#define avg(retavg, n, fun, args...) {	\
+#define avg(retmin, retavg, n, fun, argsa...) {	\
 	int i=n;			\
 	long retavg2;			\
 	retavg =0;			\
+	retmin = LONG_MAX;		\
 	while(i-->0){			\
-		fun(retavg2, args);	\
+		fun(retavg2, argsa);	\
 		retavg += retavg2;	\
+		if(retavg2 < retmin)	\
+		retmin = retavg2;	\
 	}				\
 	retavg /=n;			\
 }
-#else
-#define avg(retavg, n, fun, args...) {	\
-	int i=n;			\
-	long retavg2;			\
-	retavg = LONG_MAX;		\
-	while(i-->0){			\
-		fun(retavg2, args);	\
-		if(retavg2 < retavg)	\
-		retavg = retavg2;	\
-	}				\
-}
-#endif
+
 
 #define singletest(retsingle, QType, TType, args...) {	\
 	QType *queue = new QType;			\
@@ -69,63 +58,86 @@
 	code(MPSCQueue);	\
 }
 
-#define testandprintround(TQueue) {					\
-		long ret=0;					\
-		avg(ret, iterations, singletest, TQueue, Test_round, (threads*percent)/100, threads, ops);\
-		stream << ret << "\t";				\
+#define testandprintround(TQueue) {				\
+		long reta=0;					\
+		long retm=0;					\
+		avg(retm, reta, iterations, singletest, TQueue, Test_round, (threads*percent-1)/100 + 1, threads, ops);\
+		minstream << retm << "\t";				\
+		avgstream << reta << "\t";				\
 }
 
-#define testandprintmpsc(TQueue) {					\
-		long ret=0;					\
-		avg(ret, iterations, singletest, TQueue, Test_mpmc, threads, 1, ops);\
-		stream << ret << "\t";				\
+#define testandprintmpsc(TQueue) {				\
+		long retavg=0;					\
+		long retmin=0;					\
+		avg(retmin, retavg, iterations, singletest, TQueue, Test_mpmc, threads, 1, ops);\
+		minstream << retmin << "\t";				\
+		avgstream << retavg << "\t";				\
 }
 
-#define testandprintmpmc(TQueue) {					\
-		long ret=0;					\
-		avg(ret, iterations, singletest, TQueue, Test_mpmc, threads, threads, ops);\
-		stream << ret << "\t";				\
+#define testandprintmpmc(TQueue) {				\
+		long retavg=0;					\
+		long retmin=0;					\
+		avg(retmin, retavg, iterations, singletest, TQueue, Test_mpmc, threads, threads, ops);\
+		minstream << retmin << "\t";				\
+		avgstream << retavg << "\t";				\
 }
 
-#define printname(Object) stream << #Object << "\t" 
-
+#define printname(Object) {		\
+	minstream << #Object << "\t"; 	\
+	avgstream << #Object << "\t"; 	\
+}
 
 using namespace std;
 
 
-void roundall(long percent, long ops, int iterations, ofstream &stream){
-	stream << "#Testround,\tInhalt = Threads * " << percent << "%\t Operationen: " << ops << endl;
-	stream << "#t\t";
+void roundall(long percent, long ops, int iterations, ofstream &minstream, ofstream &avgstream){
+	minstream << "#min-Testround,\tInhalt = Threads * " << percent << "%\t Operationen: " << ops << endl;
+	minstream << "#t\t";
+	avgstream << "#avg-Testround,\tInhalt = Threads * " << percent << "%\t Operationen: " << ops << endl;
+	avgstream << "#t\t";
 	iterqueues(printname);
-	stream << endl;
-	for (int threads = 1; threads < 2*CORES; threads++){	
-		stream << threads << "\t";			
+	minstream << endl;
+	avgstream << endl;
+	for (int threads = 1; threads <= 2*CORES; threads++){	
+		minstream << threads << "\t";			
+		avgstream << threads << "\t";			
 		iterqueues(testandprintround);
-		stream << endl;				
+		minstream << endl;				
+		avgstream << endl;				
 	}
 }
 
-void mpscall(long ops, int iterations, ofstream &stream){
-	stream << "#Testmpsc,\t Operationen: " << ops << endl;
-	stream << "#t\t";
+void mpscall(long ops, int iterations, ofstream &minstream, ofstream &avgstream){
+	minstream << "#min-Testmpsc,\t Operationen: " << ops << endl;
+	minstream << "#t\t";
+	avgstream << "#avg-Testmpsc,\t Operationen: " << ops << endl;
+	avgstream << "#t\t";
 	iterqueuesMPSC(printname);
-	stream << endl;
-	for (int threads = 1; threads < 2*CORES; threads++){	
-		stream << threads << "\t";			
+	minstream << endl;
+	avgstream << endl;
+	for (int threads = 1; threads <= 2*CORES; threads++){	
+		minstream << threads << "\t";			
+		avgstream << threads << "\t";			
 		iterqueuesMPSC(testandprintmpsc);
-		stream << endl;				
+		minstream << endl;				
+		avgstream << endl;				
 	}
 }
 
-void mpmcall(long ops, int iterations, ofstream &stream){
-	stream << "#Testmpmc,\t Operationen: " << ops << endl;
-	stream << "#t\t";
-	iterqueues(printname);
-	stream << endl;
-	for (int threads = 1; threads < 2*CORES; threads++){	
-		stream << threads << "\t";			
+void mpmcall(long ops, int iterations, ofstream &minstream, ofstream &avgstream){
+	minstream << "#min-Testmpmc,\t Operationen: " << ops << endl;
+	minstream << "#t\t";
+	avgstream << "#avg-Testmpmc,\t Operationen: " << ops << endl;
+	avgstream << "#t\t";
+	iterqueuesMPSC(printname);
+	minstream << endl;
+	avgstream << endl;
+	for (int threads = 1; threads <= 2*CORES; threads++){	
+		minstream << threads << "\t";			
+		avgstream << threads << "\t";			
 		iterqueues(testandprintmpmc);
-		stream << endl;				
+		minstream << endl;				
+		avgstream << endl;				
 	}
 }
 
@@ -146,22 +158,53 @@ int main(){
 */
 
 	/*usecase 2:
-	roundall(percent, ops, iterations, ostream);	
-	mpscall(ops, iterations, ostream);	
-	mpmcall(ops, iterations, ostream);	
+	roundall(percent, ops, iterations, min-ostream, avg-ostream);	
+	mpscall(ops, iterations,  min-ostream, avg-ostream);	
+	mpmcall(ops, iterations,  min-ostream, avg-ostream);	
 	*/
-	
-	ofstream roundstream;
-	ofstream mpscstream;
-	ofstream mpmcstream;
 
-	roundstream.open("./data/roundall");
-	roundall(100, 1<<10, 10, roundstream);
-	roundstream.close();
-	mpscstream.open("./data/mpscstream");
-	mpscall(1<<10, 10, mpscstream);
-	mpscstream.close();
-	mpmcstream.open("./data/mpmcstream");
-	mpmcall(1<<10, 10, mpmcstream);
-	mpmcstream.close();
+
+	ofstream minroundstream1;
+	ofstream minroundstream2;
+	ofstream minroundstream3;
+	ofstream minmpscstream;
+	ofstream minmpmcstream;
+
+	ofstream avgroundstream1;
+	ofstream avgroundstream2;
+	ofstream avgroundstream3;
+	ofstream avgmpscstream;
+	ofstream avgmpmcstream;
+
+#define ITR 50
+
+	minroundstream1.open("./data/roundallmin1");
+	avgroundstream1.open("./data/roundallavg1");
+	roundall(50, 1<<20, ITR, minroundstream1, avgroundstream1);
+	minroundstream1.close();
+	avgroundstream1.close();
+
+	minroundstream2.open("./data/roundallmin2");
+	avgroundstream2.open("./data/roundallavg2");
+	roundall(100, 1<<20, ITR, minroundstream2, avgroundstream2);
+	minroundstream2.close();
+	avgroundstream2.close();
+
+	minroundstream3.open("./data/roundallmin3");
+	avgroundstream3.open("./data/roundallavg3");
+	roundall(200, 1<<20, ITR, minroundstream3, avgroundstream3);
+	minroundstream3.close();
+	avgroundstream3.close();
+
+	minmpscstream.open("./data/mpscstreammin");
+	avgmpscstream.open("./data/mpscstreamavg");
+	mpscall(1<<20, ITR, minmpscstream, avgmpscstream);
+	minmpscstream.close();
+	avgmpscstream.close();
+
+	minmpmcstream.open("./data/mpmcstreammin");
+	avgmpmcstream.open("./data/mpmcstreamavg");
+	mpmcall(1<<20, ITR, minmpmcstream, avgmpmcstream);
+	minmpmcstream.close();
+	avgmpmcstream.close();
 }
