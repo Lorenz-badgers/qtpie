@@ -1,0 +1,169 @@
+set xrange [1:16];
+set yrange [0:1400];
+
+set xtics (1,2,4,8,12,16);
+
+quelle = "./data_man/roundallmin1";
+set output "manr1m.png";
+set title 'Manlobbyrechner, Roundtest(50% Elemente), Minima';
+load "./plotman";
+
+quelle = "./data_man/roundallmin2"; 
+set output "manr2m.png";
+set title 'Manlobbyrechner, Roundtest(100% Elemente), Minima';
+load "./plotman";
+
+quelle = "./data_man/roundallmin3"; 
+set output "manr3m.png";
+set title 'Manlobbyrechner, Roundtest(200% Elemente), Minima';
+load "./plotman";
+
+quelle = "./data_man/mpscstreammin";
+set output "mansm.png";
+set title 'Manlobbyrechner, MPSC-Test, Minima';
+load "./plotman";
+
+quelle = "./data_man/mpmcstreammin";
+set output "manmm.png";
+set title 'Manlobbyrechner, MPMC-Test, Minima';
+load "./plotman";
+
+
+quelle = "./data_man/roundallavg1";
+set output "manr1a.png";
+set title 'Manlobbyrechner, Roundtest(50% Elemente), Durchschnitt';
+load "./plotman";
+
+quelle = "./data_man/roundallavg2"; 
+set output "manr2a.png";
+set title 'Manlobbyrechner, Roundtest(100% Elemente), Durchschnitt';
+load "./plotman";
+
+quelle = "./data_man/roundallavg3"; 
+set output "manr3a.png";
+set title 'Manlobbyrechner, Roundtest(200% Elemente), Durchschnitt';
+load "./plotman";
+
+quelle = "./data_man/mpscstreamavg";
+set output "mansa.png";
+set title 'Manlobbyrechner, MPSC-Test, Durchschnitt';
+load "./plotman";
+
+quelle = "./data_man/mpmcstreamavg";
+set output "manma.png";
+set title 'Manlobbyrechner, MPMC-Test, Durchschnitt';
+load "./plotman";
+
+
+
+
+quelle = "./data_fastbox/roundallmin1";
+set output "fastboxr1m.png";
+set title 'Haswellrechner, Roundtest(50% Elemente), Minima';
+load "./plotfast";
+
+quelle = "./data_fastbox/roundallmin2"; 
+set output "fastboxr2m.png";
+set title 'Haswellrechner, Roundtest(100% Elemente), Minima';
+load "./plotfast";
+
+quelle = "./data_fastbox/roundallmin3"; 
+set output "fastboxr3m.png";
+set title 'Haswellrechner, Roundtest(200% Elemente), Minima';
+load "./plotfast";
+
+quelle = "./data_fastbox/mpscstreammin";
+set output "fastboxsm.png";
+set title 'Haswellrechner, MPSC-Test, Minima';
+load "./plotfast";
+
+quelle = "./data_fastbox/mpmcstreammin";
+set output "fastboxmm.png";
+set title 'Haswellrechner, MPMC-Test, Minima';
+load "./plotfast";
+
+
+quelle = "./data_fastbox/roundallavg1";
+set output "fastboxr1a.png";
+set title 'Haswellrechner, Roundtest(50% Elemente), Durchschnitt';
+load "./plotfast";
+
+quelle = "./data_fastbox/roundallavg2"; 
+set output "fastboxr2a.png";
+set title 'Haswellrechner, Roundtest(100% Elemente), Durchschnitt';
+load "./plotfast";
+
+quelle = "./data_fastbox/roundallavg3"; 
+set output "fastboxr3a.png";
+set title 'Haswellrechner, Roundtest(200% Elemente), Durchschnitt';
+load "./plotfast";
+
+quelle = "./data_fastbox/mpscstreamavg";
+set output "fastboxsa.png";
+set title 'Haswellrechner, MPSC-Test, Durchschnitt';
+load "./plotfast";
+
+quelle = "./data_fastbox/mpmcstreamavg";
+set output "fastboxma.png";
+set title 'Haswellrechner, MPMC-Test, Durchschnitt';
+load "./plotfast";
+
+
+
+set xrange [1:96];
+set yrange [0:10000];
+
+set xtics (1,2,4,8,12,24,36,48,60,72,84,96);
+
+quelle = "./data_bigbox/roundallmin1";
+set output "bigboxr1m.png";
+set title 'Bigbox, Roundtest(50% Elemente), Minima';
+load "./plotman";
+
+quelle = "./data_bigbox/roundallmin2"; 
+set output "bigboxr2m.png";
+set title 'Bigbox, Roundtest(100% Elemente), Minima';
+load "./plotman";
+
+quelle = "./data_bigbox/roundallmin3"; 
+set output "bigboxr3m.png";
+set title 'Bigbox, Roundtest(200% Elemente), Minima';
+load "./plotman";
+
+quelle = "./data_bigbox/mpscstreammin";
+set output "bigboxsm.png";
+set title 'Bigbox, MPSC-Test, Minima';
+load "./plotman";
+
+quelle = "./data_bigbox/mpmcstreammin";
+set output "bigboxmm.png";
+set title 'Bigbox, MPMC-Test, Minima';
+load "./plotman";
+
+
+quelle = "./data_bigbox/roundallavg1";
+set output "bigboxr1a.png";
+set title 'Bigbox, Roundtest(50% Elemente), Durchschnitt';
+load "./plotman";
+
+quelle = "./data_bigbox/roundallavg2"; 
+set output "bigboxr2a.png";
+set title 'Bigbox, Roundtest(100% Elemente), Durchschnitt';
+load "./plotman";
+
+quelle = "./data_bigbox/roundallavg3"; 
+set output "bigboxr3a.png";
+set title 'Bigbox, Roundtest(200% Elemente), Durchschnitt';
+load "./plotman";
+
+quelle = "./data_bigbox/mpscstreamavg";
+set output "bigboxsa.png";
+set title 'Bigbox, MPSC-Test, Durchschnitt';
+load "./plotman";
+
+quelle = "./data_bigbox/mpmcstreamavg";
+set output "bigboxma.png";
+set title 'Bigbox, MPMC-Test, Durchschnitt';
+load "./plotman";
+
+
