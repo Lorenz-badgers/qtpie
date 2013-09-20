@@ -4,5 +4,5 @@ quelle u 1:3 t 'TwoSpinlockQueue' w linespoints lc 10 lw 2, \
 quelle u 1:4 t 'MutexQueue' w linespoints lc 5 lw 2, \
 quelle u 1:5 t 'TwoMutexQueue' w linespoints lc 8 lw 2, \
 quelle u 1:6 t 'Michael-Scott-Queue' w linespoints lc 1 lw 2, \
-quelle u 1:9 t 'MPSC-Queue' w linespoints lc 0 lw 2;
+quelle u 1:7 t 'MPSC-Queue' w linespoints lc 0 lw 2;
 set output;

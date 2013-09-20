@@ -59,7 +59,7 @@ Vergleich nichtblockierender Queues}
 
 \author{Michael Banken \and Lorenz Haspel} % Your name
 
-\date{9.9.2013} % Date, can be changed to a custom date
+\date{20.9.2013} % Date, can be changed to a custom date
 
 
 \begin{document}
@@ -70,14 +70,133 @@ Vergleich nichtblockierender Queues}
 	\titlepage
 \end{frame}
 
+%-----------------------------------------
 \begin{frame}
-\frametitle{empty}
+\frametitle{Projekt\"ubersicht}
 \begin{itemize}
-\item empty
+\item im Rahmen von LAOS/OctoPOS
+\item Queues als zentrale Datenstrukur f\"ur die Verwaltung von Threads
+\item paralleler Zugriff auf gemeinsame Daten
+\item unsere Zielsetzung: Performanzanalyse und die Entwicklung
+paralleler Tests mit verschiedenen nichtblockierende Queues
 \end{itemize}
 \end{frame}
 
 %-----------------------------------------
+\begin{frame}
+\frametitle{Durchgef\"uhrte Tests: Round}
+\begin {figure}
+      \begin{center}
+	\includegraphics[scale=0.25]{round.pdf}
+     \end{center}
+\end {figure}
+
+\begin{itemize}
+ \item Eine Queue, zu Beginn gef\"ullt
+ \item Jeder Thread nimmt ein Element aus der Queue und f\"ugt es wieder ein
+ \item Elemente bleiben konstant, werden also immer wieder verwendet
+\end{itemize}
+\end{frame}
+%-----------------------------------------
+\begin{frame}
+\frametitle{Durchgef\"uhrte Tests: Round}
+\begin{itemize}
+ \item Versuchsreihen mit variierender Anzahl an Threads und Elementen
+ \item feste Gesamtzahl an Operationen
+ \item Zeit wird gemessen
+ \item drei Testreihen:
+\begin{itemize}
+ \item halb so viele Elemente wie Threads
+ \item genau so viele Elemente wie Threads
+ \item doppelt so viele Elemente wie Threads
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+%-----------------------------------------
+\begin{frame}
+\frametitle{Durchgef\"uhrte Tests: MPMC}
+\begin {figure}
+      \begin{center}
+	\includegraphics[scale=0.25]{mpmc.pdf}
+     \end{center}
+\end {figure}
+
+\begin{itemize}
+ \item Multiple Producers Multiple Consumers
+ \item Queue zu Beginn leer
+ \item Producerthreads f\"ugen Elemente ein
+ \item Consumerthreads nehmen Elemente raus
+ \item jedes Element wird nur einmal verwendet
+
+
+\end{itemize}
+\end{frame}
+
+%-----------------------------------------
+\begin{frame}
+\frametitle{Durchgef\"uhrte Tests: MPMC}
+\begin{itemize}
+ \item Versuchsreihe mit variierender Anzahl an Threads
+ \item feste Anzahl an Elementen, die die Queue durchlaufen
+ \item zwei Testreihen:
+\begin{itemize}
+ \item variable Zahl an Producerthreads, ein Consumerthread
+ \item gleiche Zahl von Producern wie Consumern
+\end{itemize}
+
+
+\end{itemize}
+\end{frame}
+
+%-----------------------------------------
+\begin{frame}
+\frametitle{Verwendete Architekturen}
+\begin{itemize}
+ \item Core i7 aus der Manlobby:
+\begin{itemize}
+ \item 4 Kerne, 8 durch Hyperthreading
+ \item Tests neben normaler Betriebslast (Programme andere User, X-server, Ubuntu-Hintergrundprogramme)
+\end{itemize}
+ \item Haswellrechner "fastbox":
+\begin{itemize}
+ \item 8 Kerne, Intel-Haswell Prozessoren
+ \item Test von Queues mit naiver Implementierung von Haswell-Transaktionen
+ \item Locks auf Prozessorebene
+\end{itemize}
+ \item 48-Kern Rechner ,,bigbox'':
+\begin{itemize}
+ \item Tests bei massiv parallelem Zugriff
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+%-----------------------------------------
+\begin{frame}
+\frametitle{Verwendete Queues}
+\begin{itemize}
+ \item SimpleQueue: Queue mit einem globalen Lock f\"ur en- und dequeue-Operationen
+\begin{itemize}
+ \item Varianten: Spinlock, Mutex, Haswell-Transaktion
+\end{itemize}
+ \item TwoLockQueue: Queue mit zwei Locks, je eines f\"ur en- und dequeue Operationen
+\begin{itemize}
+ \item Varianten: Spinlock, Mutex, Haswell-Transaktionen
+\end{itemize}
+ \item Michael-Scott-Queue: nichtblockierende Queue
+ \item WnbsQueue: Queue aus den BST-Folien vom Lehrstuhl
+\begin{itemize}
+\item keine Tests durchgef\"uhrt, Probleme der verwendeten Implementierung bei parallelem Zugriff
+\end{itemize}
+ \item MPSC-Queue: Multiple-Producers-Single-Consumer-Queue
+\begin{itemize}
+\item spezialisierte nicht blockierende Queue
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+%-----------------------------------------
+
 \begin{frame}
 \frametitle{Ergebnisse}
 
@@ -96,7 +215,7 @@ Vergleich nichtblockierender Queues}
 
 \begin {figure}
       \begin{center}
-	\includegraphics[width=\textwidth]{mpmc.pdf}
+	\includegraphics[width=\textwidth /2]{mpmc.pdf}
      \end{center}
 \end {figure}
 \end{frame}

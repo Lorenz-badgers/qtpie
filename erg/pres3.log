@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.1.9)  19 SEP 2013 18:08
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.1.9)  20 SEP 2013 10:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -778,9 +778,9 @@ Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 \listing@line=\count168
 )
 \verbatim@out=\write5
-runsystem(touch /tmp/w18-test-20139191088)...disabled (restricted).
+runsystem(touch /tmp/w18-test-2013920650)...disabled (restricted).
 
-runsystem(rm -f /tmp/w18-test-20139191088)...disabled (restricted).
+runsystem(rm -f /tmp/w18-test-2013920650)...disabled (restricted).
 
 
 
@@ -1079,7 +1079,7 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./beamerthemei4_bg.pdf>]
 File: beamerthemei4_bg.pdf Graphic file (type pdf)
 <use beamerthemei4_bg.pdf>
-Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 78.
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 83.
 (pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
 
 Overfull \hbox (2.83337pt too wide) has occurred while \output is active
@@ -1088,15 +1088,15 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 
 [2
 
-] <manma.png, id=32, 1204.5pt x 803.0pt>
-File: manma.png Graphic file (type png)
- <use manma.png>
-Package pdftex.def Info: manma.png used on input line 90.
-(pdftex.def)             Requested size: 318.31725pt x 212.20586pt.
+] <round.pdf, id=32, 599.038pt x 393.47pt>
+File: round.pdf Graphic file (type pdf)
+ <use round.pdf>
+Package pdftex.def Info: round.pdf used on input line 99.
+(pdftex.def)             Requested size: 149.75912pt x 98.36725pt.
 File: beamerthemei4_bg.pdf Graphic file (type pdf)
 
 <use beamerthemei4_bg.pdf>
-Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 90.
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 99.
 (pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
 
 Overfull \hbox (2.83337pt too wide) has occurred while \output is active
@@ -1105,15 +1105,10 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 
 [3
 
- <./manma.png>] <mpmc.pdf, id=40, 599.038pt x 338.86601pt>
-File: mpmc.pdf Graphic file (type pdf)
- <use mpmc.pdf>
-Package pdftex.def Info: mpmc.pdf used on input line 102.
-(pdftex.def)             Requested size: 318.31725pt x 180.06348pt.
+ <./round.pdf>]
 File: beamerthemei4_bg.pdf Graphic file (type pdf)
-
-<use beamerthemei4_bg.pdf>
-Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 102.
+ <use beamerthemei4_bg.pdf>
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 114.
 (pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
 
 Overfull \hbox (2.83337pt too wide) has occurred while \output is active
@@ -1122,10 +1117,15 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 
 [4
 
- <./mpmc.pdf>]
+] <mpmc.pdf, id=53, 599.038pt x 338.86601pt>
+File: mpmc.pdf Graphic file (type pdf)
+ <use mpmc.pdf>
+Package pdftex.def Info: mpmc.pdf used on input line 134.
+(pdftex.def)             Requested size: 149.75912pt x 84.7163pt.
 File: beamerthemei4_bg.pdf Graphic file (type pdf)
- <use beamerthemei4_bg.pdf>
-Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 113.
+
+<use beamerthemei4_bg.pdf>
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 134.
 (pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
 
 Overfull \hbox (2.83337pt too wide) has occurred while \output is active
@@ -1134,10 +1134,10 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 
 [5
 
-]
+ <./mpmc.pdf>]
 File: beamerthemei4_bg.pdf Graphic file (type pdf)
  <use beamerthemei4_bg.pdf>
-Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 119.
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 150.
 (pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
 
 Overfull \hbox (2.83337pt too wide) has occurred while \output is active
@@ -1145,6 +1145,92 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
  []
 
 [6
+
+]
+File: beamerthemei4_bg.pdf Graphic file (type pdf)
+ <use beamerthemei4_bg.pdf>
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 172.
+(pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
+
+Overfull \hbox (2.83337pt too wide) has occurred while \output is active
+ []  
+ []
+
+[7
+
+]
+File: beamerthemei4_bg.pdf Graphic file (type pdf)
+ <use beamerthemei4_bg.pdf>
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 196.
+(pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
+
+Overfull \hbox (2.83337pt too wide) has occurred while \output is active
+ []  
+ []
+
+[8
+
+] <manma.png, id=87, 1204.5pt x 803.0pt>
+File: manma.png Graphic file (type png)
+ <use manma.png>
+Package pdftex.def Info: manma.png used on input line 209.
+(pdftex.def)             Requested size: 318.31725pt x 212.20586pt.
+File: beamerthemei4_bg.pdf Graphic file (type pdf)
+
+<use beamerthemei4_bg.pdf>
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 209.
+(pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
+
+Overfull \hbox (2.83337pt too wide) has occurred while \output is active
+ []  
+ []
+
+[9
+
+ <./manma.png>]
+File: mpmc.pdf Graphic file (type pdf)
+ <use mpmc.pdf>
+Package pdftex.def Info: mpmc.pdf used on input line 221.
+(pdftex.def)             Requested size: 318.31725pt x 180.06348pt.
+
+Overfull \hbox (21.90002pt too wide) in paragraph at lines 221--221
+ \OT1/cmss/m/n/10.95 /2/2[] 
+ []
+
+File: beamerthemei4_bg.pdf Graphic file (type pdf)
+<use beamerthemei4_bg.pdf>
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 221.
+(pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
+
+Overfull \hbox (2.83337pt too wide) has occurred while \output is active
+ []  
+ []
+
+[10
+
+]
+File: beamerthemei4_bg.pdf Graphic file (type pdf)
+ <use beamerthemei4_bg.pdf>
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 232.
+(pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
+
+Overfull \hbox (2.83337pt too wide) has occurred while \output is active
+ []  
+ []
+
+[11
+
+]
+File: beamerthemei4_bg.pdf Graphic file (type pdf)
+ <use beamerthemei4_bg.pdf>
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 238.
+(pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
+
+Overfull \hbox (2.83337pt too wide) has occurred while \output is active
+ []  
+ []
+
+[12
 
 ]
 \tf@nav=\write7
@@ -1156,11 +1242,11 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 \tf@snm=\write9
 \openout9 = `pres3.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 123.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 123.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 242.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 242.
  (./pres3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 123.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 123.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 242.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 242.
 Package rerunfilecheck Info: File `pres3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1168,23 +1254,23 @@ Package rerunfilecheck Info: File `pres3.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 123.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 242.
  ) 
 Here is how much of TeX's memory you used:
- 19998 strings out of 493485
- 374863 string characters out of 3143527
- 467200 words of memory out of 3000000
- 22818 multiletter control sequences out of 15000+200000
- 5452 words of font info for 20 fonts, out of 3000000 for 9000
+ 20055 strings out of 493485
+ 375957 string characters out of 3143527
+ 473202 words of memory out of 3000000
+ 22862 multiletter control sequences out of 15000+200000
+ 5757 words of font info for 21 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  50i,16n,55p,394b,424s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb>
-Output written on pres3.pdf (6 pages, 67258 bytes).
+Output written on pres3.pdf (12 pages, 84662 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
- 59 compressed objects within 1 object stream
- 13 named destinations out of 1000 (max. 500000)
- 48 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 131 PDF objects out of 1000 (max. 8388607)
+ 99 compressed objects within 1 object stream
+ 25 named destinations out of 1000 (max. 500000)
+ 53 words of extra memory for PDF output out of 10000 (max. 10000000)
 
