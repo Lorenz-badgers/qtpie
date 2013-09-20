@@ -44,10 +44,13 @@ void WnbsQueue::enqueue(Chain_p *item) volatile{
 	do {
 		self = (last = this->tail)->next;		/* draw copies as needed */
 	} while (!WOSCH_CAS(&this->tail, last, item));
-
+	//lock or begin transaction;
+	XFAIL(lock1);
+	XBEGIN(lock1);
 	if (!WOSCH_CAS(&last->next, self, item)) {		/* last removed by fetch */
 		this->head.next = item;			/* item becomes new head */
 	}
+	XEND();
 }
 
 Chain_p* WnbsQueue::dequeue() volatile{
@@ -60,12 +63,13 @@ Chain_p* WnbsQueue::dequeue() volatile{
 		next = abaIndex(node)->next;
 	}
 	while (!WOSCH_CAS(&this->head.next, node, (next == node ? 0 : next)));
-
+	XFAIL(lock2);
+	XBEGIN(lock2);
 	if (next == node) {	/* last element just removed, be careful */
 		if (!WOSCH_CAS(&node->next, next, 0)) this->head.next = abaIndex(node)->next;
 		else WOSCH_CAS(&this->tail, &node->next, &this->head);
 	}
-
+	XEND();
 	return node;
 }
 

@@ -45,6 +45,11 @@
 }
 
 #define iterqueues(code) {	\
+	code(WnbsQueue);	\
+}
+
+#ifdef FALSE
+#define iterqueues(code) {	\
 	code(SpinQueue);	\
 	code(TLSpinQueue);	\
 	code(MutexQueue);	\
@@ -52,6 +57,7 @@
 	code(MSQueue);		\
 	HASWELLQUEUES(code);	\
 }
+#endif
 
 #define iterqueuesMPSC(code) {	\
 	iterqueues(code)	\
@@ -178,32 +184,32 @@ int main(){
 
 #define ITR 50
 
-	minroundstream1.open("./data/roundallmin1");
-	avgroundstream1.open("./data/roundallavg1");
+	minroundstream1.open("./data/roundallmin1WbQ");
+	avgroundstream1.open("./data/roundallavg1WbQ");
 	roundall(50, 1<<20, ITR, minroundstream1, avgroundstream1);
 	minroundstream1.close();
 	avgroundstream1.close();
 
-	minroundstream2.open("./data/roundallmin2");
-	avgroundstream2.open("./data/roundallavg2");
+	minroundstream2.open("./data/roundallmin2WbQ");
+	avgroundstream2.open("./data/roundallavg2WbQ");
 	roundall(100, 1<<20, ITR, minroundstream2, avgroundstream2);
 	minroundstream2.close();
 	avgroundstream2.close();
 
-	minroundstream3.open("./data/roundallmin3");
-	avgroundstream3.open("./data/roundallavg3");
+	minroundstream3.open("./data/roundallmin3WbQ");
+	avgroundstream3.open("./data/roundallavg3WbQ");
 	roundall(200, 1<<20, ITR, minroundstream3, avgroundstream3);
 	minroundstream3.close();
 	avgroundstream3.close();
 
-	minmpscstream.open("./data/mpscstreammin");
-	avgmpscstream.open("./data/mpscstreamavg");
+	minmpscstream.open("./data/mpscstreamminWbQ");
+	avgmpscstream.open("./data/mpscstreamavgWbQ");
 	mpscall(1<<20, ITR, minmpscstream, avgmpscstream);
 	minmpscstream.close();
 	avgmpscstream.close();
 
-	minmpmcstream.open("./data/mpmcstreammin");
-	avgmpmcstream.open("./data/mpmcstreamavg");
+	minmpmcstream.open("./data/mpmcstreamminWbQ");
+	avgmpmcstream.open("./data/mpmcstreamavgWbQ");
 	mpmcall(1<<20, ITR, minmpmcstream, avgmpmcstream);
 	minmpmcstream.close();
 	avgmpmcstream.close();
