@@ -200,12 +200,61 @@ paralleler Tests mit verschiedenen nichtblockierende Queues
 \frametitle{Ergebnisse}
 \begin {figure}
       \begin{center}
-	\includegraphics[width=\textwidth]{manma.png}
+	\includegraphics[width=\textwidth]{manr1a.png}
+     \end{center}
+\end {figure}
+\end{frame}
+%-----------------------------------------
+
+\begin{frame}
+\frametitle{Ergebnisse}
+\begin {figure}
+      \begin{center}
+	\includegraphics[width=\textwidth]{manr1m.png}
+     \end{center}
+\end {figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Ergebnisse}
+\begin {figure}
+      \begin{center}
+	\includegraphics[width=\textwidth]{manr2a.png}
+     \end{center}
+\end {figure}
+\end{frame}
+%-----------------------------------------
+
+\begin{frame}
+\frametitle{Ergebnisse}
+\begin {figure}
+      \begin{center}
+	\includegraphics[width=\textwidth]{bigboxr2a.png}
+     \end{center}
+\end {figure}
+\end{frame}
+%-----------------------------------------
+
+\begin{frame}
+\frametitle{Ergebnisse}
+\begin {figure}
+      \begin{center}
+	\includegraphics[width=\textwidth]{fastboxr2a.png}
      \end{center}
 \end {figure}
 \end{frame}
 
 %-----------------------------------------
+\begin{frame}
+\frametitle{Ergebnisse}
+\begin {figure}
+      \begin{center}
+	\includegraphics[width=\textwidth]{manma.png}
+     \end{center}
+\end {figure}
+\end{frame}
+
 \begin{frame}
 \frametitle{Ergebnisse}
 \begin {figure}
@@ -224,6 +273,37 @@ paralleler Tests mit verschiedenen nichtblockierende Queues
      \end{center}
 \end {figure}
 \end{frame}
+%-----------------------------------------
+
+\begin{frame}
+\frametitle{Ergebnisse}
+\begin {figure}
+      \begin{center}
+	\includegraphics[width=\textwidth]{mansa.png}
+     \end{center}
+\end {figure}
+\end{frame}
+
+%-----------------------------------------
+\begin{frame}
+\frametitle{Ergebnisse}
+\begin {figure}
+      \begin{center}
+	\includegraphics[width=\textwidth]{bigboxsa.png}
+     \end{center}
+\end {figure}
+\end{frame}
+
+%-----------------------------------------
+\begin{frame}
+\frametitle{Ergebnisse}
+\begin {figure}
+      \begin{center}
+	\includegraphics[width=\textwidth]{fastboxsa.png}
+     \end{center}
+\end {figure}
+\end{frame}
+
 
 %-----------------------------------------
 
@@ -235,6 +315,9 @@ paralleler Tests mit verschiedenen nichtblockierende Queues
 	Insgesamt ist sie damit in jeder Hinsicht mittelm\"a\ss{}ig.
 \item MPSC-Queue ist auf den meisten Systemen besser als blockierende Queues,
 	aber auf Haswell Architektur wird sie vermutlich durch HLE von der Spinlock Queue \"uberholt.
+\item Messdaten, Testumgebung und verwendete Queues auf:\\
+	git://github.com/Lorenz-badgers/qtpie \\
+	https://github.com/Lorenz-badgers/qtpie.git
 \end{itemize}
 \end{frame}
 
@@ -245,6 +328,7 @@ paralleler Tests mit verschiedenen nichtblockierende Queues
 \begin{itemize}
 \item nachtr\"agliche Implementierung gemeinsamer Schnittstelle zwischen verschiedenen Queues und Testsystem komplexer als erwartet
 \item Messungen f\"ur pr\"asentierte Graphen sp\"ater als geplant durchf\"uhrbar
+\item Umgang mit Messdaten: mehr Daten speichern, um z.B. Streuungen ermitteln zu k\"onnen
 \end{itemize}
 \end{frame}
 
