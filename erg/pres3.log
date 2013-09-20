@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.1.9)  20 SEP 2013 13:06
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.1.9)  20 SEP 2013 13:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -778,9 +778,9 @@ Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 \listing@line=\count168
 )
 \verbatim@out=\write5
-runsystem(touch /tmp/w18-test-2013920786)...disabled (restricted).
+runsystem(touch /tmp/w18-test-2013920790)...disabled (restricted).
 
-runsystem(rm -f /tmp/w18-test-2013920786)...disabled (restricted).
+runsystem(rm -f /tmp/w18-test-2013920790)...disabled (restricted).
 
 
 
@@ -1170,10 +1170,10 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 
 [8
 
-] <manr1a.png, id=87, 1204.5pt x 803.0pt>
-File: manr1a.png Graphic file (type png)
- <use manr1a.png>
-Package pdftex.def Info: manr1a.png used on input line 206.
+] <manr2a.png, id=87, 1204.5pt x 803.0pt>
+File: manr2a.png Graphic file (type png)
+ <use manr2a.png>
+Package pdftex.def Info: manr2a.png used on input line 206.
 (pdftex.def)             Requested size: 318.31725pt x 212.20586pt.
 File: beamerthemei4_bg.pdf Graphic file (type pdf)
 
@@ -1187,15 +1187,15 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 
 [9
 
- <./manr1a.png>] <manr1m.png, id=95, 1204.5pt x 803.0pt>
-File: manr1m.png Graphic file (type png)
- <use manr1m.png>
-Package pdftex.def Info: manr1m.png used on input line 216.
+ <./manr2a.png>] <manr1a.png, id=95, 1204.5pt x 803.0pt>
+File: manr1a.png Graphic file (type png)
+ <use manr1a.png>
+Package pdftex.def Info: manr1a.png used on input line 215.
 (pdftex.def)             Requested size: 318.31725pt x 212.20586pt.
 File: beamerthemei4_bg.pdf Graphic file (type pdf)
 
 <use beamerthemei4_bg.pdf>
-Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 216.
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 215.
 (pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
 
 Overfull \hbox (2.83337pt too wide) has occurred while \output is active
@@ -1204,15 +1204,15 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 
 [10
 
- <./manr1m.png>] <manr2a.png, id=103, 1204.5pt x 803.0pt>
-File: manr2a.png Graphic file (type png)
- <use manr2a.png>
-Package pdftex.def Info: manr2a.png used on input line 226.
+ <./manr1a.png>] <manr1m.png, id=103, 1204.5pt x 803.0pt>
+File: manr1m.png Graphic file (type png)
+ <use manr1m.png>
+Package pdftex.def Info: manr1m.png used on input line 225.
 (pdftex.def)             Requested size: 318.31725pt x 212.20586pt.
 File: beamerthemei4_bg.pdf Graphic file (type pdf)
 
 <use beamerthemei4_bg.pdf>
-Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 226.
+Package pdftex.def Info: beamerthemei4_bg.pdf used on input line 225.
 (pdftex.def)             Requested size: 364.19536pt x 273.05545pt.
 
 Overfull \hbox (2.83337pt too wide) has occurred while \output is active
@@ -1221,7 +1221,7 @@ Overfull \hbox (2.83337pt too wide) has occurred while \output is active
 
 [11
 
- <./manr2a.png>] <bigboxr2a.png, id=111, 1204.5pt x 803.0pt>
+ <./manr1m.png>] <bigboxr2a.png, id=111, 1204.5pt x 803.0pt>
 File: bigboxr2a.png Graphic file (type png)
 
 <use bigboxr2a.png>
@@ -1428,7 +1428,7 @@ Here is how much of TeX's memory you used:
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb>
-Output written on pres3.pdf (22 pages, 327161 bytes).
+Output written on pres3.pdf (22 pages, 327157 bytes).
 PDF statistics:
  219 PDF objects out of 1000 (max. 8388607)
  156 compressed objects within 2 object streams
