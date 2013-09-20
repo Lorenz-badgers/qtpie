@@ -1,4 +1,6 @@
+set key outside;
+set term png size 1200, 800;
 set xlabel "threads";
-set ylabel "time\n (ms)" offset +5;
+set ylabel "time (ms)" offset +0;
 
 

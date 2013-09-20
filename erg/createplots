@@ -111,9 +111,9 @@ load "./plotfast";
 
 
 set xrange [1:96];
-set yrange [0:10000];
+set yrange [0:14000];
 
-set xtics (1,2,4,8,12,24,36,48,60,72,84,96);
+set xtics (1,4,8,12,24,36,48,60,72,84,96);
 
 quelle = "./data_bigbox/roundallmin1";
 set output "bigboxr1m.png";
