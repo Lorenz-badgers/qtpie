@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.1.9)  20 SEP 2013 13:10
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.1.9)  20 SEP 2013 14:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -778,9 +778,9 @@ Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 \listing@line=\count168
 )
 \verbatim@out=\write5
-runsystem(touch /tmp/w18-test-2013920790)...disabled (restricted).
+runsystem(touch /tmp/w18-test-2013920850)...disabled (restricted).
 
-runsystem(rm -f /tmp/w18-test-2013920790)...disabled (restricted).
+runsystem(rm -f /tmp/w18-test-2013920850)...disabled (restricted).
 
 
 
@@ -1428,7 +1428,7 @@ Here is how much of TeX's memory you used:
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb>
-Output written on pres3.pdf (22 pages, 327157 bytes).
+Output written on pres3.pdf (22 pages, 297293 bytes).
 PDF statistics:
  219 PDF objects out of 1000 (max. 8388607)
  156 compressed objects within 2 object streams

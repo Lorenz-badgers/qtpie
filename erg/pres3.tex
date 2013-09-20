@@ -153,16 +153,16 @@ paralleler Tests mit verschiedenen nichtblockierenden Queues
 \begin{frame}
 \frametitle{Verwendete Architekturen}
 \begin{itemize}
- \item Core i7 aus der Manlobby:
+ \item Core i7 aus der Manlobbi:
 \begin{itemize}
  \item 4 Kerne, 8 durch Hyperthreading
- \item Tests neben normaler Betriebslast (Programme andere User, X-server, Ubuntu-Hintergrundprogramme)
+ \item Tests neben normaler Betriebslast (Programme andere User, X-Server, Ubuntu-Hintergrundprogramme)
 \end{itemize}
  \item Haswellrechner "Fastbox":
 \begin{itemize}
  \item 8 Kerne, Intel-Haswell Prozessoren
  \item Test von Queues mit naiver Implementierung von Haswell-Transaktionen
- \item atomare Tranaktionen auf Prozessorebene
+ \item atomare Transaktionen auf Prozessorebene
 \end{itemize}
  \item 48-Kern-Rechner "Bigbox":
 \begin{itemize}
@@ -183,13 +183,13 @@ paralleler Tests mit verschiedenen nichtblockierenden Queues
 \begin{itemize}
  \item Varianten: Spinlock, Mutex, Haswell-Transaktionen
 \end{itemize}
- \item Michael-Scott-Queue: nichtblockierende Queue
+ \item Michael-Scott-Queue: nicht-blockierende Queue
 \begin{itemize}
  \item verwendet CAS-Operationen
 \end{itemize}
  \item MPSC-Queue: Multiple-Producers-Single-Consumer-Queue
 \begin{itemize}
-\item spezialisierte nicht blockierende Queue
+\item spezialisierte nicht-blockierende Queue
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -315,7 +315,7 @@ paralleler Tests mit verschiedenen nichtblockierenden Queues
 	Insgesamt ist sie damit in jeder Hinsicht mittelm\"a\ss{}ig.
 \item MPSC-Queue ist auf den meisten Systemen besser als blockierende Queues,
 	aber auf Haswell Architektur wird sie von der Spinlock Queue \"uberholt.
-\item Insgesamt ist es nicht offensichtlich, welche Queue unter welchen Bedingungnen optimal arbeitet.
+\item Insgesamt ist es nicht offensichtlich, welche Queue unter welchen Bedingungen optimal arbeitet.
 \item Messdaten, Testumgebung und verwendete Queues auf:\\
 	git://github.com/Lorenz-badgers/qtpie \\
 	https://github.com/Lorenz-badgers/qtpie.git

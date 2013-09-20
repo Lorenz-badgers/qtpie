@@ -5,53 +5,53 @@ set xtics (1,2,4,8,12,16);
 
 quelle = "./data_man/roundallmin1";
 set output "manr1m.png";
-set title 'Manlobbyrechner, Roundtest(50% Elemente), Minima';
+set title 'Manlobbirechner, Roundtest(50% Elemente), Minima';
 load "./plotman";
 
 quelle = "./data_man/roundallmin2"; 
 set output "manr2m.png";
-set title 'Manlobbyrechner, Roundtest(100% Elemente), Minima';
+set title 'Manlobbirechner, Roundtest(100% Elemente), Minima';
 load "./plotman";
 
 quelle = "./data_man/roundallmin3"; 
 set output "manr3m.png";
-set title 'Manlobbyrechner, Roundtest(200% Elemente), Minima';
+set title 'Manlobbirechner, Roundtest(200% Elemente), Minima';
 load "./plotman";
 
 quelle = "./data_man/mpscstreammin";
 set output "mansm.png";
-set title 'Manlobbyrechner, MPSC-Test, Minima';
+set title 'Manlobbirechner, MPSC-Test, Minima';
 load "./plotman";
 
 quelle = "./data_man/mpmcstreammin";
 set output "manmm.png";
-set title 'Manlobbyrechner, MPMC-Test, Minima';
+set title 'Manlobbirechner, MPMC-Test, Minima';
 load "./plotman";
 
 
 quelle = "./data_man/roundallavg1";
 set output "manr1a.png";
-set title 'Manlobbyrechner, Roundtest(50% Elemente), Durchschnitt';
+set title 'Manlobbirechner, Roundtest(50% Elemente), Durchschnitt';
 load "./plotman";
 
 quelle = "./data_man/roundallavg2"; 
 set output "manr2a.png";
-set title 'Manlobbyrechner, Roundtest(100% Elemente), Durchschnitt';
+set title 'Manlobbirechner, Roundtest(100% Elemente), Durchschnitt';
 load "./plotman";
 
 quelle = "./data_man/roundallavg3"; 
 set output "manr3a.png";
-set title 'Manlobbyrechner, Roundtest(200% Elemente), Durchschnitt';
+set title 'Manlobbirechner, Roundtest(200% Elemente), Durchschnitt';
 load "./plotman";
 
 quelle = "./data_man/mpscstreamavg";
 set output "mansa.png";
-set title 'Manlobbyrechner, MPSC-Test, Durchschnitt';
+set title 'Manlobbirechner, MPSC-Test, Durchschnitt';
 load "./plotman";
 
 quelle = "./data_man/mpmcstreamavg";
 set output "manma.png";
-set title 'Manlobbyrechner, MPMC-Test, Durchschnitt';
+set title 'Manlobbirechner, MPMC-Test, Durchschnitt';
 load "./plotman";
 
 
