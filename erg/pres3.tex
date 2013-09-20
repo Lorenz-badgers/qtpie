@@ -78,7 +78,7 @@ Vergleich nichtblockierender Queues}
 \item Queues als zentrale Datenstrukur f\"ur die Verwaltung von Threads
 \item paralleler Zugriff auf gemeinsame Daten
 \item unsere Zielsetzung: Performanzanalyse und die Entwicklung
-paralleler Tests mit verschiedenen nichtblockierende Queues
+paralleler Tests mit verschiedenen nichtblockierenden Queues
 \end{itemize}
 \end{frame}
 
@@ -314,7 +314,8 @@ paralleler Tests mit verschiedenen nichtblockierende Queues
 	Allerdings gibt es auch immer schlechtere Varianten.\\
 	Insgesamt ist sie damit in jeder Hinsicht mittelm\"a\ss{}ig.
 \item MPSC-Queue ist auf den meisten Systemen besser als blockierende Queues,
-	aber auf Haswell Architektur wird sie vermutlich durch HLE von der Spinlock Queue \"uberholt.
+	aber auf Haswell Architektur wird sie von der Spinlock Queue \"uberholt.
+\item Insgesamt ist es nicht offensichtlich, welche Queue unter welchen Bedingungnen optimal arbeitet
 \item Messdaten, Testumgebung und verwendete Queues auf:\\
 	git://github.com/Lorenz-badgers/qtpie \\
 	https://github.com/Lorenz-badgers/qtpie.git
